@@ -4,7 +4,7 @@ const {listingSchema , reviewSchema} = require("./schema.js")
 const ExpressError = require("./utils/ExpressError.js");
 
 module.exports.isLoggedIn = (req,res, next) => {
-   // console.log(req.path , "..", req.originalUrl);
+    //console.log(req.path , "..", req.originalUrl);
     if(!req.isAuthenticated()){
         //redirectUrl
         req.session.redirectUrl = req.originalUrl;

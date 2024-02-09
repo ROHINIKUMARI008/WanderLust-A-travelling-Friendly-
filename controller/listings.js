@@ -11,7 +11,7 @@ module.exports.index = (async(req,res,next)=>{
 
     module.exports.newlisting =( async(req,res,next)=>{  
         let url =req.file.path;
-        let filename =req.file.ilename;
+        let filename =req.file.filename;
         
         const newListing = new Listing(req.body.listing);
         newListing.owner = req.user._id;  
@@ -24,14 +24,10 @@ module.exports.index = (async(req,res,next)=>{
     
     module.exports.readlisting = async(req,res,next)=>{
         let { id } = req.params;                      //use urlencoded app.set-----
-        let listing = await Listing.findById(id)
-    
-        .populate({
+        const listing = await Listing.findById(id).populate({
             path :"reviews",
             populate: {
-                path :  "author"
-            },
-         })
+                path :  "author" }, })
         .populate("owner");
         
     

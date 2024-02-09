@@ -24,10 +24,9 @@ const listingSchema = new Schema({
     },
 ],
 
-owner: 
-    {
+owner : {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref : "User",
 },
 
 });
