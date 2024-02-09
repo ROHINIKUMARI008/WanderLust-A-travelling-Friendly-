@@ -16,6 +16,7 @@ if(process.env.NODE_ENV != "production"){
   const Session = require("express-session");
   const MongoStore = require("connect-mongo");
   const flash = require("connect-flash");
+
   
   const ExpressError = require("./utils/ExpressError.js");
   const Review= require("./models/review.js");
@@ -62,7 +63,10 @@ if(process.env.NODE_ENV != "production"){
       touchAfter : 24 * 3600,
   }
 );
-  
+   
+store.on("error", () => {
+  console.log("error in Mongo Session Store")
+});
   
   const sessionOptions = 
   {  
