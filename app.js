@@ -65,7 +65,7 @@ if(process.env.NODE_ENV != "production"){
 );
    
 store.on("error", () => {
-  console.log("error in Mongo Session Store")
+  console.log("error in Mongo Session Store",err);
 });
   
   const sessionOptions = 
@@ -83,6 +83,9 @@ store.on("error", () => {
   };
 
 
+  app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "homepage.html"));
+});
   app.use(Session(sessionOptions));
   app.use(flash());
   
@@ -91,9 +94,9 @@ store.on("error", () => {
   }); 
   
   
-  app.get("/", (req, res) => {
-    res.send("Hi, I am root");
-  });
+  // app.get("/", (req, res) => {
+  //   res.send("Hi, I am root");
+  // });
   
   
   
@@ -133,15 +136,15 @@ store.on("error", () => {
    let githubUrl = "https://github.com/ROHINIKUMARI008";
     res.redirect(githubUrl);
   });
-  app.get("/register", async(req, res) => {
-    let { name = "anonoymonus"} = req.query;
-      req.session.name = name ;
-      req.flash("success" , "Welcome back");
-          res.redirect("/hello");
-  });
-      app.get("/hello" , (req,res) =>{
-      res.send(`hello , ${req.session.name}`);
-      });
+  // app.get("/register", async(req, res) => {
+  //   let { name = "anonoymonus"} = req.query;
+  //     req.session.name = name ;
+  //     req.flash("success" , "Welcome back");
+  //         res.redirect("/hello");
+  // });
+      // app.get("/hello" , (req,res) =>{
+      // res.send(`hello , ${req.session.name}`);
+      // });
   
   // app.get("/getCookies", (req, res) => {
   //   res.cookie("greet","hello");
