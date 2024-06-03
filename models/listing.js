@@ -24,16 +24,17 @@ const listingSchema = new Schema({
     },
 ],
 
-owner : {
-    type: Schema.Types.ObjectId,
-    ref : "User",
-},
+  owner: 
+        {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+        },
 
 });
 
 listingSchema.post("findOneAndDelete" , async(listing) => { 
  if(listing) {
- await Review.deleteMany({ _id : { $in : listings.reviews } });
+ await Review.deleteMany({ _id : { $in : listing.reviews } });
 
 } 
 });

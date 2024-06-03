@@ -27,7 +27,7 @@ module.exports.index = (async(req,res,next)=>{
         const listing = await Listing.findById(id).populate({
             path :"reviews",
             populate: {
-                path :  "author" }, })
+            path :  "author" }, })
         .populate("owner");
         
     
@@ -44,6 +44,7 @@ module.exports.index = (async(req,res,next)=>{
         
         let listing = await Listing.findById(id);
         if(!listing){
+           req.flash("error", "Listing does not exist"); 
             res.redirect("/listings")
         }
         let orgImgUrl = listing.image.url;
@@ -52,6 +53,11 @@ module.exports.index = (async(req,res,next)=>{
     };
 
     module.exports.updateListings = async(req,res,next)=>{
+         let {id} = req.params;
+        await Listing.findByIdAndUpdate((id) , { ...req.body.listing });
+        req.flash("success", "Listing Updated");
+        res.redirect(`/listings/${id}`);
+    }
    
         // if(!req.body.listing){                      
         //     throw new ExpressError(400,"Send valid data for listing")
@@ -65,23 +71,14 @@ module.exports.index = (async(req,res,next)=>{
     //   await listing.save();
 
     //   }
-    let {id} = req.params;
-        await Listing.findByIdAndUpdate((id) , { ...req.body.listing });
-        req.flash("success", "Listing Updated");
-        res.redirect(`/listings/${id}`);
-    }
-
-    module.exports.destroyListings = async(req,res)=>{
    
-            let { id } = req.params;
-            let deletedListing =await Listing.findByIdAndDelete(id);
-             console.log(deletedListing);
-            console.log("delete");
-            req.flash("success", "Listing deleted");
-            res.redirect("/listings")  
-       
+
+   module.exports.destroyListing = async (req, res) => {
+    let {id} = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
+    req.flash("success", "listing deleted");
+    res.redirect("/listings");
         
-       };
-        
-        
+   }
     

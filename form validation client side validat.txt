@@ -1,0 +1,19 @@
+form validation client side validation
+handle all kinds of error so server is not going to stops 
+
+Library :-A set of pre written code that used to perform specfic task
+FrameWork :-A set of pre written code that provides a structure for developing software app
+
+
+MVC framework Design Pattern;-
+A way to write code
+Core functionality of databases store in models
+Core functionality of forentend store in views'
+Core functionality of backend store in controllers
+
+we make our code readable as possible as I can
+
+
+10.0.2.15  10.0.2.255
+
+127.0.0.1  255.0.0.0

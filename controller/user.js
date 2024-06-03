@@ -1,6 +1,5 @@
 const User = require("../models/user.js");
-const passport = require("passport");
-const { saveRedirectUrl } = require("../middleware.js");
+
 
 module.exports.renderSignup = (req,res) =>
 {   res.render("users/signup.ejs");
@@ -12,13 +11,11 @@ module.exports.formSignup = async (req,res) => {
         const newUser= new User({ email,username });
         const registerUser = await User.register(newUser, password);
         console.log(registerUser);
-        req.login(registerUser,(err) => {
-            if(err){
-                return next(err);
-            }
+        req.login(registerUser,(err) => { //login user automatically
+            if(err){return next(err); }
             req.flash("success" , "Welcome to WanderLust");
             res.redirect("/listings");
-        } )
+        })
       
        }catch(e){
     req.flash("error", e.message);

@@ -8,8 +8,6 @@ if(process.env.NODE_ENV != "production"){
   const router = express.Router();
   const app = express();
   const mongoose = require("mongoose");
-  const Listing = require("./models/listing.js");
-  const {listingSchema} = require("./schema.js")
   const path = require("path");
   const methodOverride = require("method-override");
   const ejsMate= require("ejs-mate");
@@ -31,8 +29,8 @@ if(process.env.NODE_ENV != "production"){
    const reviewRouter = require("./routers/review.js");
    const userRouter = require("./routers/user.js");
   
-  // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-  const dbUrl = process.env.ATLASDB_URL;
+   const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+  // const dbUrl = process.env.ATLASDB_URL;
   main()
     .then(() => {
       console.log("connected to DB");
@@ -42,7 +40,7 @@ if(process.env.NODE_ENV != "production"){
     });
   
     async function main() {
-      await mongoose.connect(dbUrl);
+      await mongoose.connect(MONGO_URL);
     }
   
   app.set("view engine", "ejs");
@@ -55,14 +53,14 @@ if(process.env.NODE_ENV != "production"){
   
   
     const store = MongoStore.create({
-    mongoUrl: dbUrl,
+    mongoUrl: MONGO_URL,// change krne h
     crypto : {
       secret : process.env.SECRET,
-     
      },
       touchAfter : 24 * 3600,
   }
 );
+
    
 store.on("error", () => {
   console.log("error in Mongo Session Store",err);
@@ -75,10 +73,9 @@ store.on("error", () => {
     resave: false,
     saveUninitialized: true,
     cookie: {
-      expires: Date.now() +  7 * 24 * 60 *1000,
-      maxAge : 7 * 24 * 60 *1000,
+      expires: Date.now() +  7 * 24 * 60 * 60*1000,
+      maxAge : 7 * 24 * 60 * 60* 1000,
       httpOnly : true,
-  
     },
   };
 
@@ -93,19 +90,11 @@ store.on("error", () => {
     console.log("server is listening to port 8080");
   }); 
   
-  
-  // app.get("/", (req, res) => {
-  //   res.send("Hi, I am root");
-  // });
-  
-  
-  
-  
+
   app.use(passport.initialize());
   app.use(passport.session());
   
   passport.use(new LocalStrategy(User.authenticate()));
-  
   passport.serializeUser(User.serializeUser());
   passport.deserializeUser(User.deserializeUser());
   
@@ -151,10 +140,6 @@ store.on("error", () => {
   //   res.send("Hi, I aam cookies");
   
   // }); 
-  
-  
-  
-    
   
   
   app.use("/listings",listingRouter);

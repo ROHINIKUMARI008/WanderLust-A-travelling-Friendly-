@@ -40,12 +40,12 @@ body{
     font-size: 2rem;
 }
 .nav-link{
-    color: black !important;
+    color:#222222 !important;
 }
 /* footer */
 .f-info-links a{
     text-decoration: none;
-    color: black;
+    color: #222222;
 }
 .f-info-links a:hover{
     text-decoration: underline;
