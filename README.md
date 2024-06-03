@@ -7,12 +7,13 @@ A full-stack project designed to cater to the needs of travel enthusiasts by pro
 
 ## Demo
 
-
+![ss1](https://github.com/ROHINIKUMARI008/WanderLust-A-travelling-Friendly-/assets/130496180/b40e068c-399a-4edf-a47c-9b5629852870)
 
 
 ## Key Features
 
 •	**Search Functionality:** Users can search for destinations and find a variety of residing places.
+
 •	**Review System:** Users can read and write reviews about their experiences at different destinations.
 
 •	**Authentication and Authorization:** Secure login and registration processes ensure that only authorized users can access certain features.
@@ -97,4 +98,24 @@ Start the server
 ```bash
   node app.js
 ```
+You can login your credentials to make your Airbnb:-
 
+![ss8](https://github.com/ROHINIKUMARI008/WanderLust-A-travelling-Friendly-/assets/130496180/c348596d-c574-4716-872c-928d39846fac)
+
+
+You can Add your views on destination , your experiences and share thoughts on visting wonderful places
+
+![ss5](https://github.com/ROHINIKUMARI008/WanderLust-A-travelling-Friendly-/assets/130496180/227e607a-ea6d-41c0-a1cc-444015190818)
+
+
+You can listing your destination on Wanderlust 
+
+![ss6](https://github.com/ROHINIKUMARI008/WanderLust-A-travelling-Friendly-/assets/130496180/f858c276-e699-42ef-b18c-5f9591638fc5)
+
+
+
+
+
+You can edit( adding new description,deleting) your destination on Wanderlust 
+
+![ss7](https://github.com/ROHINIKUMARI008/WanderLust-A-travelling-Friendly-/assets/130496180/b18db978-965a-447b-b6e6-e13babbe29f0)
