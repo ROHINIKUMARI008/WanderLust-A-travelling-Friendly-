@@ -34,7 +34,7 @@ A full-stack project designed to cater to the needs of travel enthusiasts by pro
     
 
 
-##Design and Implementation
+## Design and Implementation
 •	**User Interface:** A responsive and visually appealing user interface was designed using HTML, Bootstrap, and JavaScript. This ensured a consistent and seamless user experience across different devices and screen sizes.
 
 •	**Authentication & Authorization:** Proper user validation processes were implemented using inbuilt function to secure user data and manage user permissions.
