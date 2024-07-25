@@ -40,12 +40,12 @@ body{
     font-size: 2rem;
 }
 .nav-link{
-    color:#222222 !important;
+    color: black !important;
 }
 /* footer */
 .f-info-links a{
     text-decoration: none;
-    color: #222222;
+    color: black;
 }
 .f-info-links a:hover{
     text-decoration: underline;
@@ -125,5 +125,12 @@ body{
  .edit-btn{
     width: 4rem !important;
  }   
+}
+
+
+
+#map {
+    height : 400px;
+    width: 80vh;
 }
 

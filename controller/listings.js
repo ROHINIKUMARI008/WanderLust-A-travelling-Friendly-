@@ -1,5 +1,10 @@
 const Listing = require("../models/listing.js")
 
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken : mapToken});
+
+
 module.exports.index = (async(req,res,next)=>{
     let allListing = await Listing.find();
     console.log(allListing);
@@ -10,13 +15,27 @@ module.exports.index = (async(req,res,next)=>{
     }
 
     module.exports.newlisting =( async(req,res,next)=>{  
+
+  let response =  await geocodingClient
+  .forwardGeocode({
+  query: req.body.listing.location,
+  limit: 2 // set 5 max
+})
+  .send();
+  //console.log(response.body.features[0].geometry);
+ 
+
+
         let url =req.file.path;
         let filename =req.file.filename;
         
         const newListing = new Listing(req.body.listing);
         newListing.owner = req.user._id;  
-        newListing.image = {url, filename};   
-        await newListing.save();
+        newListing.image = {url, filename};  
+        
+        newListing.geometry = response.body.features[0].geometry;
+        let savedListing=  await newListing.save();
+       console.log(savedListing);
         
         req.flash("success","new listings created" );
         res.redirect("/listings");
@@ -24,10 +43,14 @@ module.exports.index = (async(req,res,next)=>{
     
     module.exports.readlisting = async(req,res,next)=>{
         let { id } = req.params;                      //use urlencoded app.set-----
-        const listing = await Listing.findById(id).populate({
+        let listing = await Listing.findById(id)
+    
+        .populate({
             path :"reviews",
             populate: {
-            path :  "author" }, })
+                path :  "author"
+            },
+         })
         .populate("owner");
         
     
@@ -44,7 +67,6 @@ module.exports.index = (async(req,res,next)=>{
         
         let listing = await Listing.findById(id);
         if(!listing){
-           req.flash("error", "Listing does not exist"); 
             res.redirect("/listings")
         }
         let orgImgUrl = listing.image.url;
@@ -53,11 +75,6 @@ module.exports.index = (async(req,res,next)=>{
     };
 
     module.exports.updateListings = async(req,res,next)=>{
-         let {id} = req.params;
-        await Listing.findByIdAndUpdate((id) , { ...req.body.listing });
-        req.flash("success", "Listing Updated");
-        res.redirect(`/listings/${id}`);
-    }
    
         // if(!req.body.listing){                      
         //     throw new ExpressError(400,"Send valid data for listing")
@@ -71,14 +88,31 @@ module.exports.index = (async(req,res,next)=>{
     //   await listing.save();
 
     //   }
-   
-
-   module.exports.destroyListing = async (req, res) => {
+    let {id} = req.params;
+        await Listing.findByIdAndUpdate((id) , { ...req.body.listing });
+        req.flash("success", "Listing Updated");
+        res.redirect(`/listings/${id}`);
+    }
+    module.exports.destroyListings = async (req, res) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
-    req.flash("success", "listing deleted");
+    req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
+}
+//     module.exports.destroyListings = async(req,res)=>{
+//        try{
+//             let { id } = req.params;
+//             await Listing.findByIdAndDelete(id);
+//             //  console.log(deletedListing);
+//             // console.log("delete");
+//             req.flash("success", "Listing deleted");
+//        }catch(err){
+//         console.log(err);
+//         res.redirect("/listings")  
+//        }
         
-   }
+//        };
+        
+        
     

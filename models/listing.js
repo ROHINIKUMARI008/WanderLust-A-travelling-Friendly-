@@ -24,17 +24,30 @@ const listingSchema = new Schema({
     },
 ],
 
-  owner: 
-        {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-        },
+owner: 
+    {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+},
 
+ //geoJSON is better approach that defing coordinates
+ geometry: {
+        type: {
+          type: String, // Don't do `{ location: { type: String } }`
+          enum: ["Point"], // 'location.type' must be 'Point'
+          required: true
+        },
+        coordinates: {
+          type: [Number],
+          required: true
+        }
+      }
 });
+
 
 listingSchema.post("findOneAndDelete" , async(listing) => { 
  if(listing) {
- await Review.deleteMany({ _id : { $in : listing.reviews } });
+ await Review.deleteMany({ _id : { $in : listings.reviews } });
 
 } 
 });
